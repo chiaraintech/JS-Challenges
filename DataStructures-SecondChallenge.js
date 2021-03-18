@@ -9,9 +9,11 @@ Let's continue with our football betting app!
       Odd of victory Bayern Munich: 1.33
       Odd of draw: 3.25
       Odd of victory Borrussia Dortmund: 6.5
-Get the team names directly from the game object, don't hardcode them (except for "draw"). HINT: Note how the odds and the game objects have the same property names 😉
+Get the team names directly from the game object, don't hardcode them (except for "draw"). 
+HINT: Note how the odds and the game objects have the same property names 😉
 
-BONUS: Create an object called 'scorers' which contains the names of the players who scored as properties, and the number of goals as the value. In this game, it will look like this:
+BONUS: Create an object called 'scorers' which contains the names of the players who scored as properties, and the number of goals as the value. 
+In this game, it will look like this:
       {
         Gnarby: 1,
         Hummels: 1,
@@ -68,12 +70,14 @@ for (const [key, value] of Object.entries(game.scored)) {
   console.log(`Goal ${parseInt(key)+1}: ${value}`)
 }
 
-
 //Second exercise
 const elements = Object.values(game.odds)
 const numSum = elements => elements.reduce((a, b) => a + b, 0)
 const average = numSum(elements) / elements.length
 console.log(average)
 
-
 //Third exercise
+for (const [key, value] of Object.entries(game.odds)) {
+  const thisTeam = key === 'x' ? 'draw' : `${game[key]}`
+  console.log(`Odd of victory for ${thisTeam}: ${value}`)
+}
