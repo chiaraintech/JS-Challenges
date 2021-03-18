@@ -67,11 +67,13 @@ const game = {
 for (const [key, value] of Object.entries(game.scored)) {
   console.log(`Goal ${parseInt(key)+1}: ${value}`)
 }
-console.log('----------')
+
+
 //Second exercise
 const elements = Object.values(game.odds)
 const numSum = elements => elements.reduce((a, b) => a + b, 0)
 const average = numSum(elements) / elements.length
 console.log(average)
-console.log('----------')
+
+
 //Third exercise
