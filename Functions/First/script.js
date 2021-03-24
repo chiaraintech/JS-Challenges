@@ -106,3 +106,18 @@ const flightData = [359, 'Geroge Cooper'];
 book.apply(lufthansa, flightData);
 //With ES6, we use the spread operator.
 book.call(eurowings, ...flightData);
+
+
+//5. The bind method.
+//Like the call method, bind allows us to manually set this keyword for any function call.
+//Bind does not immediately call the function, but it returns a new function where this keyword is set.,
+lufthansa.planes = 400;
+lufthansa.buyPlane = function () {
+    console.log(this);
+    this.planes++;
+    console.log(this.planes);
+};
+lufthansa.buyPlane();
+document.querySelector('.buy').addEventListener('click', lufthansa.buyPlane)
+//Proof that the this keyword is set dynamically.
+//In an eventListener, the this keyword refers to the object it's attached to.
