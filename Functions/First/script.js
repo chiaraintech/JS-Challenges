@@ -104,3 +104,5 @@ console.log(lufthansa);
 //The only difference from 'CALL' is that 'APPLY' does not receive a list of arguments after the this keyword, but instead it's gonna take an array of arguments.
 const flightData = [359, 'Geroge Cooper'];
 book.apply(lufthansa, flightData);
+//With ES6, we use the spread operator.
+book.call(eurowings, ...flightData);
