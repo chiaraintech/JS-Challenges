@@ -16,6 +16,7 @@ const createBooking = function(flightNum, numPassengers = 1, price = 200) {
 
 createBooking('LH123', 4, 190);
 
+
 //2. How passing arguments work (value VS reference)
 const flight = 'JFK345'
 const chiara = {
@@ -40,8 +41,8 @@ newPassport(chiara);
 checkIn(flight, chiara);
 //We have two functions manipulating the same object, so prone to errors.
 
-//3.Higher-order functions.
 
+//3a.Higher-order functions accepting other functions.
 const oneWord = function(string) {
     return string.replace(/ /g, '').toLowerCase();
 }
@@ -55,3 +56,51 @@ const transform = function(string, func) {
     console.log(`Transformed by: ${func.name}`);
 }
 transform('Javascript is the best!', upperFirstWord);
+
+
+//3b.Higher-order functions returning functions. Important in functional programming.
+const greet = function(greeting) {
+    return function(name){                              //this func returns another function
+        console.log(`${greeting} ${name}`)
+    }
+}
+const greeterHey = greet('Hey');        
+greeterHey('Chiara');
+greeterHey('Dylan');
+greet('Hello')('Martha');                        
+
+//rewrite only with arrow functions
+const arrowGreet = greeting => name => {console.log(`${greeting} ${name}`)}
+arrowGreet('Good morning')('Emma');
+
+
+//4a. The call method.
+const lufthansa = {
+    airline: 'Lufthansa',
+    iataCode: 'LH',
+    bookings: [],
+    book(flightNumber, passengerName){
+        console.log(`${passengerName} booked a seat on ${this.airline} flight ${this.iataCode} ${flightNumber}`);
+        this.bookings.push({flight: `${this.iataCode}${flightNumber}`, passengerName})
+    }
+}
+//The this keyword points to the lufthansa object itself because that's the object on which the book method was called.
+lufthansa.book(123, 'Chiara');
+const eurowings = {
+    airline: 'Eurowings',
+    iataCode: 'EW',
+    bookings: [],
+}
+//Call, apply and bind enable me to point the 'this' keyword to where I want it to.
+//We call the 'CALL' method, which will call the book method, passing the params I need.
+//Manually and explicitely I can set the this keyword of any function that we want to call.
+const book = lufthansa.book;
+book.call(eurowings, 23, 'Sarah Williams') //first param is WHERE I want to call it. Even if the actual code is inside the lufthansa object, we can point it outside.
+console.log(eurowings);
+book.call(lufthansa, 33, 'Mary Cooper'); //We set the this keyword inside of function call of lufthansa, it is now back to pointing to Lufthansa.
+console.log(lufthansa);
+
+//4b. The apply method.
+//The only difference from 'CALL' is that 'APPLY' does not receive a list of arguments after the this keyword, but instead it's gonna take an array of arguments.
+const flightData = [359, 'Geroge Cooper'];
+book.apply(lufthansa, flightData);
