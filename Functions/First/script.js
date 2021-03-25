@@ -121,3 +121,42 @@ lufthansa.buyPlane();
 document.querySelector('.buy').addEventListener('click', lufthansa.buyPlane)
 //Proof that the this keyword is set dynamically.
 //In an eventListener, the this keyword refers to the object it's attached to.
+
+
+//6.Closures
+//A closure gives you access to an outer function’s scope from an inner function. 
+//Closures are created every time a function is created, at function creation time.
+//A closure is not a feature that we manually code. It automatically happens.
+const secureBooking = function() {
+    let passengerCount = 0;
+    return function() {
+        passengerCount++;
+        console.log(`${passengerCount} passengers.`)
+    }
+}
+const booker = secureBooking(); 
+booker();
+booker();
+booker();
+console.dir(booker);
+//the booker function can increment the number. But how?
+//The function secureBooking() has finished executing/its Execution context is no longer on the stack. 
+//However, the inner booker func is still able to access the passengerCount var that is inside the booker fucntion which should no longer exit.
+//What makes this possible is the CLOSURE => it makes a func remember all the variables that existed at the gone function's birthplace.
+//=> a function has access to the variable environment of the execution context in which it was created (even when the scope has been destroyed as the EC has finished)
+
+//Example
+let f;                          //define empty variable
+const g = function() {          //function expression
+    const a = 23;               //a variable
+    f = function() {            //reassing the f value (now in global scope) to a function value. 
+                                //It closes over any variables of the execution context in which it was defined. 
+                                //This is true even when the var itself was not even defined within this variable environment (as it was created in the global scope).
+                                //It was indeed able to grab the variables it needed because it was reassigned from within that function's scope.
+        
+        
+        console.log(a * 2)
+    }
+}
+g();                            
+f(); //the g's variable environment is gone, but f closes over its environment so it was able to access the value of the 'a' variable.
